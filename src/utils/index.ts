@@ -12,7 +12,7 @@ export const clearObject = (object: any) => {
   return newObj;
 };
 
-export const useMount = (callback: any) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);

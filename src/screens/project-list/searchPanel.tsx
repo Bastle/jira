@@ -1,6 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
+import { User, Param } from "./index";
 
-export const SearchPanel = ({ param, setParam, users }) => {
+interface SearchPanelProps {
+  param: Param;
+  users: User[];
+  setParam: React.Dispatch<React.SetStateAction<Param>>;
+}
+
+export const SearchPanel: FC<SearchPanelProps> = ({
+  param,
+  setParam,
+  users,
+}) => {
   return (
     <form action="">
       <div>

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import "./App.css";
-import { ProjectListScreen } from "screens/project-list";
+import { ProjectListScreen } from "screens/project-list/index";
 
 const App: FC = () => {
   return (
