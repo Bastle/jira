@@ -23,7 +23,7 @@ export type Param = {
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState<Param>({
+  const [param, setParam] = useState({
     name: "",
     personId: "",
   });

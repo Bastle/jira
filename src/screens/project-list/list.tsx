@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Project, User } from "./index";
 
 interface ListProps {
