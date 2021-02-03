@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC, ReactNode } from "react";
 import * as auth from "auth-provider";
 import { User } from "screens/project-list";
 
@@ -19,7 +19,7 @@ const AuthContext = React.createContext<
 
 AuthContext.displayName = "AuthContext";
 
-export const AuthProvider = () => {
+export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   // point free
@@ -27,11 +27,17 @@ export const AuthProvider = () => {
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
-  return <AuthContext.Provider value={{ user, login, register, logout }} />;
+  return (
+    <AuthContext.Provider
+      children={children}
+      value={{ user, login, register, logout }}
+    />
+  );
 };
 
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
+  console.log("context: ", context);
   if (!context) {
     throw new Error("useAuth 必须在 AuthProvider 中使用");
   }
