@@ -47,7 +47,19 @@ export const http = async (
 
 export const useHttp = () => {
   const { user } = useAuth();
-  // TODO TS 操作符
+  // TODO TS Utility Types
+  // TS 中的 typeof 是在静态环境运行的
+  // utility type 的用法：用泛型给它传入一个其他类型，然后 utility type 对这个类型进行某种操作
   return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user?.token });
 };
+
+type Person = {
+  name: string;
+  age: number;
+};
+// Partial
+const xiaoming: Partial<Person> = { name: "xiaoming" };
+// Omit
+const x: Omit<Person, "name"> = { age: 3 };
+const y: Omit<Person, "name" | "age"> = {};
