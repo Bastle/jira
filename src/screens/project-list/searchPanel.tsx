@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { User, Param } from "./index";
-import { Input, Select } from "antd";
+import { Input, Select, Form } from "antd";
 interface SearchPanelProps {
   param: Param;
   users: User[];
@@ -13,13 +13,15 @@ export const SearchPanel: FC<SearchPanelProps> = ({
   users,
 }) => {
   return (
-    <form action="">
-      <div>
+    <Form layout="inline" style={{ marginBottom: "2rem" }}>
+      <Form.Item>
         <Input
           type="text"
           value={param.name}
           onChange={(evt) => setParam({ ...param, name: evt.target.value })}
         />
+      </Form.Item>
+      <Form.Item>
         <Select
           value={param.personId}
           onChange={(value) => setParam({ ...param, personId: value })}
@@ -31,7 +33,7 @@ export const SearchPanel: FC<SearchPanelProps> = ({
             </Select.Option>
           ))}
         </Select>
-      </div>
-    </form>
+      </Form.Item>
+    </Form>
   );
 };

@@ -3,26 +3,30 @@ import { clearObject, useDebounce, useMount } from "../../utils";
 import { List } from "./list";
 import { SearchPanel } from "./searchPanel";
 import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
 
-export type Project = {
+export interface Project {
   id: number;
   name: string;
-  personId: number;
-};
+  personId: string;
+  pin: string;
+  organization: string;
+  created: number;
+}
 
-export type User = {
-  id: number;
+export interface User {
+  id: string;
   name: string;
   email: string;
   title: string;
   organization: string;
   token: string;
-};
+}
 
-export type Param = {
+export interface Param {
   name: string;
   personId: string;
-};
+}
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -50,3 +54,7 @@ export const ProjectListScreen = () => {
     </div>
   );
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
