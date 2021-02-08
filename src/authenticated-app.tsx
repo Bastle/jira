@@ -43,8 +43,8 @@ const AuthenticatedApp: FC<{ user: User }> = ({ user }) => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 6rem 1fr 6rem;
-  grid-template-columns: 20rem 1fr 20rem;
+  grid-template-rows: 6rem 1fr;
+  grid-template-columns: 1fr;
   grid-template-areas: "header header header" "main main main";
   height: 100vh;
   grid-gap: 5rem;
