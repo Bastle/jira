@@ -1,30 +1,28 @@
 import { FC } from "react";
 import { Project, User } from "./index";
-
+import { Table } from "antd";
 interface ListProps {
   list: Project[];
   users: User[];
 }
 
 export const List: FC<ListProps> = ({ list, users }) => {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>名称</th>
-          <th>负责人</th>
-        </tr>
-      </thead>
-      <tbody>
-        {list.map((project) => (
-          <tr key={project.id}>
-            <td>{project.name}</td>
-            <td>
-              {users.find((person) => project.personId === person.id)?.name}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+  const columns = [
+    {
+      title: "名称",
+      dataIndex: "name",
+      sorter: (a: Project, b: Project) => a.name.localeCompare(b.name),
+    },
+    {
+      title: "负责人",
+      render: (_: any, project: Project) => {
+        return (
+          <span>
+            {users.find((person) => project.personId === person.id)?.name}
+          </span>
+        );
+      },
+    },
+  ];
+  return <Table pagination={false} columns={columns} dataSource={list} />;
 };
