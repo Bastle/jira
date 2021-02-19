@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { User } from "screens/project-list";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Button } from "antd";
 
 const AuthenticatedApp: FC<{ user: User }> = ({ user }) => {
   const { logout } = useAuth();
@@ -22,12 +22,16 @@ const AuthenticatedApp: FC<{ user: User }> = ({ user }) => {
             overlay={
               <Menu>
                 <Menu.Item key="logout">
-                  <a onClick={logout}>登出</a>
+                  <Button type="link" onClick={logout}>
+                    登出
+                  </Button>
                 </Menu.Item>
               </Menu>
             }
           >
-            <a onClick={(e) => e.preventDefault()}>Hi, {user.name}</a>
+            <Button type="link" onClick={(e) => e.preventDefault()}>
+              Hi, {user.name}
+            </Button>
           </Dropdown>
         </HeaderRight>
       </Header>
