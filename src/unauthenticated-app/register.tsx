@@ -2,11 +2,30 @@ import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
 import { LongButton } from "unauthenticated-app";
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { register } = useAuth();
 
-  const handleSubmit = (values: { username: string; password: string }) => {
-    register(values);
+  const handleSubmit = async ({
+    cpassword,
+    ...values
+  }: {
+    username: string;
+    password: string;
+    cpassword: string;
+  }) => {
+    if (cpassword !== values.password) {
+      onError(new Error("请确认两次输入的密码相同"));
+      return;
+    }
+    try {
+      await register(values);
+    } catch (e) {
+      onError(e);
+    }
   };
 
   return (
@@ -22,6 +41,12 @@ export const RegisterScreen = () => {
         name="password"
       >
         <Input placeholder="密码" type="password" id="password" />
+      </Form.Item>
+      <Form.Item
+        rules={[{ required: true, message: "请确认密码" }]}
+        name="cpassword"
+      >
+        <Input placeholder="确认密码" type="password" id="cpassword" />
       </Form.Item>
       <Form.Item>
         <LongButton htmlType="submit" type="primary">

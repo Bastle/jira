@@ -4,6 +4,9 @@ import { List } from "./list";
 import { SearchPanel } from "./searchPanel";
 import { useHttp } from "utils/http";
 import styled from "@emotion/styled";
+import { useAsync } from "utils/use-async";
+import { useProject } from "utils/project";
+import { useUsers } from "utils/user";
 
 export interface Project {
   id: number;
@@ -33,26 +36,30 @@ export const ProjectListScreen = () => {
     name: "",
     personId: "",
   });
-  const [list, setList] = useState([]);
-  const [users, setUsers] = useState<User[]>([]);
+  // const [list, setList] = useState([]);
+  // const [users, setUsers] = useState<User[]>([]);
   const client = useHttp();
-
   const debouncedParam = useDebounce(param, 1000);
 
-  useEffect(() => {
-    client("projects", { data: clearObject(debouncedParam) }).then(setList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedParam]);
+  // const { run, isLoading, error, data: list } = useAsync<Project[]>();
+  const { isLoading, error, data: list } = useProject(debouncedParam);
+  const { data: users } = useUsers();
 
-  useMount(() => {
-    client("users").then(setUsers);
-  });
+  console.log("---- isLoading ---->", isLoading);
+  // useEffect(() => {
+  //   run(client("projects", { data: clearObject(debouncedParam) }));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [debouncedParam]);
+
+  // useMount(() => {
+  //   client("users").then(setUsers);
+  // });
 
   return (
     <Container>
       <h1>项目列表</h1>
-      <SearchPanel param={param} setParam={setParam} users={users} />
-      <List list={list} users={users} />
+      <SearchPanel param={param} setParam={setParam} users={users || []} />
+      <List list={list || []} users={users || []} isLoading={isLoading} />
     </Container>
   );
 };

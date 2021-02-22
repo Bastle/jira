@@ -7,9 +7,9 @@ export const isVoid = (value: unknown) =>
   value === undefined || value === null || value === "";
 
 export const clearObject = (object: {
-  [propName: string]: string | number;
+  [propName: string]: string | number | undefined;
 }) => {
-  const newObj: { [propName: string]: string | number } = {};
+  const newObj: { [propName: string]: string | number | undefined } = {};
   Object.keys(object).forEach((key) => {
     if (!isFalsy(object[key])) {
       newObj[key] = object[key];

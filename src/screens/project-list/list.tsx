@@ -6,9 +6,10 @@ import dayjs from "dayjs";
 interface ListProps {
   list: Project[];
   users: User[];
+  isLoading?: boolean;
 }
 
-export const List: FC<ListProps> = ({ list, users }) => {
+export const List: FC<ListProps> = ({ list, users, isLoading = false }) => {
   const columns = [
     {
       title: "名称",
@@ -45,5 +46,13 @@ export const List: FC<ListProps> = ({ list, users }) => {
       },
     },
   ];
-  return <Table pagination={false} columns={columns} dataSource={list} />;
+  return (
+    <Table
+      loading={isLoading}
+      pagination={false}
+      columns={columns}
+      dataSource={list}
+      rowKey={(record) => record.name}
+    />
+  );
 };
