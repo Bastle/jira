@@ -54,22 +54,22 @@ export const useHttp = () => {
     http(endpoint, { ...config, token: user?.token });
 };
 
-type Person = {
-  name: string;
-  age: number;
-};
+// type Person = {
+//   name: string;
+//   age: number;
+// };
 
-// Partial
-const xiaoming: Partial<Person> = { name: "xiaoming" };
-// Omit
-const x: Omit<Person, "name"> = { age: 3 };
-const y: Omit<Person, "name" | "age"> = {};
+// // Partial
+// const xiaoming: Partial<Person> = { name: "xiaoming" };
+// // Omit
+// const x: Omit<Person, "name"> = { age: 3 };
+// const y: Omit<Person, "name" | "age"> = {};
 
-// Readonly
+// // Readonly
 
-// Pick
+// // Pick
 
-const z: Pick<Person, "name"> = { name: "rose" };
+// const z: Pick<Person, "name"> = { name: "rose" };
 
-// Exclude
-type Age = Exclude<keyof Person, "name">;
+// // Exclude
+// type Age = Exclude<keyof Person, "name">;
