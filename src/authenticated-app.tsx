@@ -9,6 +9,7 @@ import { Dropdown, Menu, Button } from "antd";
 
 const AuthenticatedApp: FC<{ user: User }> = ({ user }) => {
   const { logout } = useAuth();
+
   return (
     <Container>
       <Header between={true}>

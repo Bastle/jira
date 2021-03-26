@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDebounce } from "../../utils";
+import { useDebounce, useDocumentTitle } from "../../utils";
 import { List } from "./list";
 import { SearchPanel } from "./searchPanel";
 import { useHttp } from "utils/http";
@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import { useAsync } from "utils/use-async";
 import { useProject } from "utils/project";
 import { useUsers } from "utils/user";
+import { Helmet } from "react-helmet";
 
 export interface Project {
   id: number;
@@ -40,7 +41,7 @@ export const ProjectListScreen = () => {
   // const [users, setUsers] = useState<User[]>([]);
   const client = useHttp();
   const debouncedParam = useDebounce(param, 1000);
-
+  useDocumentTitle("项目列表", false);
   // const { run, isLoading, error, data: list } = useAsync<Project[]>();
   const { isLoading, error, data: list } = useProject(debouncedParam);
   const { data: users } = useUsers();
@@ -57,6 +58,9 @@ export const ProjectListScreen = () => {
 
   return (
     <Container>
+      {/* <Helmet>
+        <title>项目列表</title>
+      </Helmet> */}
       <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       <List list={list || []} users={users || []} isLoading={isLoading} />
