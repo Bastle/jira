@@ -2,6 +2,8 @@ import { FC } from "react";
 import { User, Project } from "./index";
 import { Table } from "antd";
 import dayjs from "dayjs";
+// react-router  react-router-dom  react react-dom/react-native/react-vr
+import { Link } from "react-router-dom";
 
 interface ListProps {
   list: Project[];
@@ -13,9 +15,12 @@ export const List: FC<ListProps> = ({ list, users, isLoading = false }) => {
   const columns = [
     {
       title: "名称",
-      dataIndex: "name",
+      // dataIndex: "name",
       key: "name",
       sorter: (a: Project, b: Project) => a.name.localeCompare(b.name),
+      render(_: string, project: Project) {
+        return <Link to={`${project.id}`}>{project.name}</Link>;
+      },
     },
     {
       title: "部门",
@@ -25,7 +30,7 @@ export const List: FC<ListProps> = ({ list, users, isLoading = false }) => {
     {
       title: "负责人",
       key: "personId",
-      render: (_: any, project: Project) => {
+      render: (_: string, project: Project) => {
         return (
           <span>
             {users.find((person) => project.personId === person.id)?.name}
