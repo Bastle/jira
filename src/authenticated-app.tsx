@@ -6,9 +6,14 @@ import { Row } from "components/lib";
 import { User } from "screens/project-list";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Dropdown, Menu, Button } from "antd";
-import { Navigate, Route, Routes } from "react-router";
 import { ProjectScreen } from "screens/project";
-import { BrowserRouter as Router } from "react-router-dom";
+import { resetRoute } from "utils";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
 const AuthenticatedApp: FC<{ user: User }> = () => {
   return (
@@ -18,11 +23,9 @@ const AuthenticatedApp: FC<{ user: User }> = () => {
       <Main>
         <Router>
           <Routes>
-            <Route path="/projects" element={<ProjectListScreen />}></Route>
-            <Route
-              path="/projects/:projectId/*"
-              element={<ProjectScreen />}
-            ></Route>
+            <Route path="projects" element={<ProjectListScreen />} />
+            <Route path="projects/:projectId/*" element={<ProjectScreen />} />
+            <Navigate to="projects" />
           </Routes>
         </Router>
       </Main>
@@ -37,7 +40,9 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <SoftwareLogo width="18rem" color="rgb(38, 132, 255)" />
+        <Button type="link" onClick={resetRoute}>
+          <SoftwareLogo width="18rem" color="rgb(38, 132, 255)" />
+        </Button>
         <h3>项目</h3>
         <h3>用户</h3>
       </HeaderLeft>
