@@ -6,16 +6,18 @@ export const isFalsy = (value: unknown): boolean =>
 export const isVoid = (value: unknown) =>
   value === undefined || value === null || value === "";
 
-export const clearObject = (object: {
-  [propName: string]: string | number | undefined;
-}) => {
-  const newObj: { [propName: string]: string | number | undefined } = {};
-  Object.keys(object).forEach((key) => {
-    if (!isFalsy(object[key])) {
-      newObj[key] = object[key];
+export const clearObject = (object?: { [propName: string]: unknown }) => {
+  if (!object) {
+    return {};
+  }
+  const result = { ...object };
+  Object.keys(result).forEach((key) => {
+    const value = result[key];
+    if (isVoid(value)) {
+      delete result[key];
     }
   });
-  return newObj;
+  return result;
 };
 
 export const useMount = (callback: () => void) => {
@@ -26,16 +28,28 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
-export const useDebounce = <S>(value: S, delay = 2000) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
+    // 每次在value变化以后，设置一个定时器
     const timeout = setTimeout(() => setDebouncedValue(value), delay);
+    // 每次在上一个useEffect处理完以后再运行
     return () => clearTimeout(timeout);
   }, [value, delay]);
 
   return debouncedValue;
 };
+
+// export const useDebounce = <S>(value: S, delay = 2000) => {
+//   const [debouncedValue, setDebouncedValue] = useState(value);
+//   // useEffect(() => {
+//   //   const timeout = setTimeout(() => setDebouncedValue(value), delay);
+//   //   return () => clearTimeout(timeout);
+//   // }, [value]);
+
+//   return debouncedValue;
+// };
 
 export const useArray = <T>(initialValue: T[]) => {
   const [value, setValue] = useState(initialValue);

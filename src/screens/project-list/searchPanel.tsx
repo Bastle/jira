@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { User, Param } from "./index";
+import { User, Param, Project } from "./index";
 import { Input, Select, Form } from "antd";
 interface SearchPanelProps {
-  param: Param;
+  param: Partial<Pick<Project, "name" | "personId">>;
   users: User[];
-  setParam: React.Dispatch<React.SetStateAction<Param>>;
+  setParam: (param: SearchPanelProps["param"]) => void;
 }
 
 export const SearchPanel: FC<SearchPanelProps> = ({

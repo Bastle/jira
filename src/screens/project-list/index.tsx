@@ -9,18 +9,20 @@ import { useProject } from "utils/project";
 import { useUsers } from "utils/user";
 import { Helmet } from "react-helmet";
 import { Test } from "./test";
+import { useUrlQueryParam } from "utils/url";
+import { useProjectsSearchParams } from "./util";
 
 export interface Project {
   id: number;
   name: string;
-  personId: string;
+  personId: number;
   pin: string;
   organization: string;
   created: number;
 }
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -34,33 +36,19 @@ export interface Param {
 }
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-  // const [list, setList] = useState([]);
-  // const [users, setUsers] = useState<User[]>([]);
-  const client = useHttp();
-  const debouncedParam = useDebounce(param, 1000);
   useDocumentTitle("项目列表", false);
-  // const { run, isLoading, error, data: list } = useAsync<Project[]>();
+  // const [, setParam] = useState({
+  //   name: "",
+  //   personId: "",
+  // });
+  // 基本类型可以放到依赖里，组件状态可以放在依赖里；非组件状态的对象/数组，绝不可以放在依赖里
+  const [param, setParam] = useProjectsSearchParams();
+  const debouncedParam = useDebounce(param, 200);
   const { isLoading, error, data: list } = useProject(debouncedParam);
   const { data: users } = useUsers();
 
-  // useEffect(() => {
-  //   run(client("projects", { data: clearObject(debouncedParam) }));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [debouncedParam]);
-
-  // useMount(() => {
-  //   client("users").then(setUsers);
-  // });
-
   return (
     <Container>
-      {/* <Helmet>
-        <title>项目列表</title>
-      </Helmet> */}
       <Test />
       <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
@@ -68,6 +56,8 @@ export const ProjectListScreen = () => {
     </Container>
   );
 };
+
+ProjectListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;
