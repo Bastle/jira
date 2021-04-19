@@ -1,6 +1,6 @@
 import { Spin } from "antd";
 import styled from "@emotion/styled";
-import { loadServer, DevTools } from "jira-dev-tool";
+import { DevTools } from "jira-dev-tool";
 
 export const Row = styled.div<{
   gap?: number | string | boolean;
